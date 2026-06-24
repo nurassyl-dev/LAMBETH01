@@ -166,7 +166,8 @@ const revealItems = document.querySelectorAll(
    HEADER MENU — ACTIVE + AUTO SCROLL
 ========================================================= */
 
-const menuLinks = document.querySelectorAll('.header-menu a');
+const allMenuLinks = document.querySelectorAll('.header-menu a');
+const menuLinks = document.querySelectorAll('.header-menu a[href^="#"]');
 const sections = [...menuLinks].map(link =>
   document.querySelector(link.getAttribute('href'))
 );
@@ -189,7 +190,7 @@ if (siteHeader && menuToggle && menuContainer) {
     menuToggle.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
   });
 
-  menuLinks.forEach(link => {
+  allMenuLinks.forEach(link => {
     link.addEventListener('click', closeMobileMenu);
   });
 
@@ -228,6 +229,8 @@ function setActiveMenu() {
 
   /* автопрокрутка меню */
   const linkRect = activeLink.getBoundingClientRect();
+  if (!menuContainer) return;
+
   const containerRect = menuContainer.getBoundingClientRect();
 
   if (
